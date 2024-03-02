@@ -24,7 +24,7 @@ def main(ticker: str, price: float, sector: str) -> None:
     #
     #                       WRITE CODE HERE!!!
     #
-    routingKey = sys.argv[1] + sys.argv[3] if len(sys.argv) > 4 else 'stock.info'
+    routingKey = "Stock." + sector + "." + ticker if len(sys.argv) > 4 else 'stock.info'
 
 
 
