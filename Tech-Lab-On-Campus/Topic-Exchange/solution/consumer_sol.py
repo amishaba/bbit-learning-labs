@@ -28,14 +28,12 @@ class mqConsumer(mqConsumerInterface):
 
 
     def setupRMQConnection(self) -> None:
-        print("setting up rmq connection")
         con_params = pika.URLParameters(os.environ["AMQP_URL"])
         self.connection = pika.BlockingConnection(parameters=con_params)
 
         self.channel = self.connection.channel()
         self.channel.queue_declare(queue=self.queue_name)
         
-        print("queue declared")
         exchange = self.channel.exchange_declare(exchange=self.exchange_name, exchange_type="topic")
 
         self.channel.queue_bind(
@@ -44,17 +42,14 @@ class mqConsumer(mqConsumerInterface):
         exchange=self.exchange_name,
         )
 
-        print ("queue bound")
 
         self.channel.basic_consume(
         self.queue_name, self.on_message_callback, auto_ack=False
         )
 
-        print ("basic consume called")
 
         self.startConsuming()
 
-        print("start of consumed called")
 
 
 
